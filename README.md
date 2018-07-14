@@ -59,7 +59,7 @@ function alertUnhealthyFeature(name, message) {
 ```
 
 # API
-see the [API docs](docs/API.md).
+see the [API docs](#api). (coming soon)
 
 # Features
 ## Housekeeping
