@@ -65,16 +65,47 @@ see the [API docs](docs/API.md).
 ## Housekeeping
 One of the most important features in this library, is the ability to define when your feature toggle will start alerting you to clean up.
 
-You can base the alert on an expiry date, server load, or any other data you have access to.
+You can base the alert on an expiry date, server load, or any other data you have access to. You also have full control of the message that is alerted.
 
-Health checks are executed every time an instance of `FeatureToggles` is created.
+```js
+const features = [{
+    ...,
+    test: () => new Date() < new Date('2018-12-25')
+    health: () => {
+        if (new Date() >= new Date('2018-12-25')) {
+            return 'X-mas eve has passed. Please remove this feature';
+        }
+
+        if (new Date() > new Date('2019-01-01')){
+            return 'Seriously, remove this feature already!'
+        }
+    }
+}]
+```
+
+Health checks are executed every time an instance of `FeatureToggles` is created. If this creates too many alerts to manage, you may add custom throttling in the unhealthyFeature handler.
+
+```js
+function alertUnhealthyFeature(name, message) {
+    const hour = new DateTime().getHours();
+    const withinWorkingHours =  hour > 9 && hour < 19;
+    if(withinWorkingHours) {
+        slack.sendWarning(`unhealthy feature toggle found: 
+        ${name}: ${message}`);
+    }
+}
+```
 
 ## Dependencies
 Dependencies are useful when you want to create various toggles based on various sources of data. They can be anything from a service or function, to a value of any type.
 
+```js
+toggles.defineDependency('my-dependency', myDependency);
+```
+
 Dependencies are only retrieved when required. If you have not set any dependencies, but try to retrieve the value of a toggle with no dependencies, you will receive the toggle value as expected. This is useful when you have a mix of simple and more complex toggles; you can start using the simpler toggles right away without having to source all the dependencies for your more complex toggles.
 
-**Note:** If you attempt to query toggle before it's dependencies have been set, the client _will_ throw an exception.
+**Note:** If you attempt to query a toggle before its dependencies have been set, the client _will_ throw an exception. This usually indicates that your application does not have enough data to calculate the toggle's value yet and you should re-order the sequence of actions within your application.
 
 Dependencies may only ever be set once per `FeatureToggles` instance. You can rest assured that your feature toggle will not change it's value unexpectedly. 
 
