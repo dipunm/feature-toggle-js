@@ -130,9 +130,34 @@ Dependencies are only retrieved when required. If you have not set any dependenc
 
 **Note:** If you attempt to query a toggle before its dependencies have been set, the client _will_ throw an exception. This usually indicates that your application does not have enough data to calculate the toggle's value yet and you should re-order the sequence of actions within your application.
 
+```js
+const features = [
+    {
+        name: 'simple',
+        test: () => true
+    },
+    {
+        name: 'complex',
+        dependencies: ['service'],
+        test: (s) => s.isActive;
+    },
+];
+const toggles = new FeatureToggles(features);
+console.log(toggles.get('simple')) // true
+console.log(toggles.get('complex')) // throws an error.
+```
+
 Dependencies may only ever be set once per `FeatureToggles` instance. You can rest assured that your feature toggle will not change it's value unexpectedly. 
 
 **Note:** Attempting to set a dependency a second time will result in an exception being thrown. If you require your toggle to be more dynamic, you should use the [reset feature](#resets).
+
+```js
+// no errors.
+toggles.defineDependency('user', {name: 'betty'});
+
+// throws an error. Dependencies cannot be re-defined.
+toggles.defineDependency('user', {name: 'bob'}); 
+```
 
 ## Resets
 **Disclaimer:** Typically, this feature is **not** recommended if you can scope your `FeatureToggles` instances to shorter lifespans. If the value of a toggle were to change mid-way through an asynchronous operation within your application, the operation may produce unexpected results.
