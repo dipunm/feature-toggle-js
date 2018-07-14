@@ -126,7 +126,7 @@ Dependencies are useful when you want to create various toggles based on various
 toggles.defineDependency('my-dependency', myDependency);
 ```
 
-Dependencies are only retrieved when required. If you have not set any dependencies, but try to retrieve the value of a toggle with no dependencies, you will receive the toggle value as expected. This is useful when you have a mix of simple and more complex toggles; you can start using the simpler toggles right away without having to source all the dependencies for your more complex toggles.
+Dependencies are only retrieved when required. If you have not set any dependencies, and try to retrieve the value of a toggle with no required dependencies, you will receive the toggle value as expected. This is useful when you have a mix of simple and more complex toggles; you can start using the simpler toggles right away without having to source all the dependencies for your more complex toggles.
 
 **Note:** If you attempt to query a toggle before its dependencies have been set, the client _will_ throw an exception. This usually indicates that your application does not have enough data to calculate the toggle's value yet and you should re-order the sequence of actions within your application.
 
