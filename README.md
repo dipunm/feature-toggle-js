@@ -62,6 +62,27 @@ function alertUnhealthyFeature(name, message) {
 see the [API docs](#api). (coming soon)
 
 # Features
+## Scoping
+Each new instance of `FeatureToggles` may have slightly different dependencies, and there is no limit to how many instances you can create.
+
+A typical scenario, is to scope the feature toggles to user requests in an [express](https://expressjs.com/) application.
+
+```js
+const express = require('express');
+const features = require('./features');
+const app = express();
+
+// creating a middleware
+app.use((req, res, next) => {
+    const toggles = new FeatureToggles(features);
+    toggles.defineDependency('request', req);
+
+    // http://expressjs.com/en/4x/api.html#res.locals
+    res.locals.toggles = toggles;
+    next();
+});
+```
+
 ## Housekeeping
 One of the most important features in this library, is the ability to define when your feature toggle will start alerting you to clean up.
 
