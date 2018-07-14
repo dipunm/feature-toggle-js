@@ -93,11 +93,13 @@ const features = [{
     ...,
     test: () => new Date() < new Date('2018-12-25')
     health: () => {
-        if (new Date() >= new Date('2018-12-25')) {
+        const afterEve = new Date() >= new Date('2018-12-25');
+        const afterNewYear = new Date() >= new Date('2019-01-01');
+        if (afterEve && !afterNewYear) {
             return 'X-mas eve has passed. Please remove this feature';
         }
 
-        if (new Date() > new Date('2019-01-01')){
+        if (afterNewYear){
             return 'Seriously, remove this feature already!'
         }
     }
