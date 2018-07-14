@@ -1,7 +1,7 @@
 {
-  "name": "feature-toggle-js",
+  "name": "smart-feature-toggles",
   "version": "1.0.0",
-  "description": "A flexible feature toggle library for js",
+  "description": "A flexible feature flag library for js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
