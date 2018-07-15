@@ -21,6 +21,13 @@ npm install smart-feature-toggles
 const FeatureToggles = require('smart-feature-toggles');
 ```
 
+#### Set up alert handling: (see: [Housekeeping](#housekeeping))
+```js
+FeatureToggles.onHealthAlert(
+    (name, alert) => console.log(name, alert)
+);
+```
+
 #### Name and configure your features:
 ```js
 features = [{
@@ -38,13 +45,6 @@ features = [{
         }
     }
 }];
-```
-
-#### Set up alert handling: (see: [Housekeeping](#housekeeping))
-```js
-FeatureToggles.onHealthAlert(
-    (name, alert) => console.log(name, alert)
-);
 ```
 
 #### Create your toggle client:
