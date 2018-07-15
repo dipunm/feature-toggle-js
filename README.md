@@ -240,3 +240,6 @@ const features = [{
     }
 }]
 ```
+
+### Live updates
+Another use case would be to implement live feature toggling in the browser. This would allow you to produce this sort of effect: [(YouTube) Incremental rollout and targeting individual users - #3 LaunchDarkly Feature Flags by Fun Fun Function @5m27s](https://youtu.be/ilRGOvR4HxU?t=5m27s)
