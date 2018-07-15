@@ -179,7 +179,7 @@ would require extra contexual data to work. You can start using the simpler
 toggles before defining the dependencies for your more complex toggles.
 ```js
 toggles.defineDependency('domain', 'couk');
-toggles.get('display England flag logo');
+toggles.get('use auth middleware');
 
 toggles.defineDependency('user_role', 'admin');
 toggles.get('enable admin features');
@@ -208,7 +208,7 @@ toggles.get('simple'); // true
 toggles.get('complex'); // throws an error.
 ```
 
-### Dependencies may only ever be set once per `FeatureToggles` instance.
+### Dependencies may only ever be set once per FeatureToggles instance.
 You can rest assured that your feature toggle will not change it's value 
 unexpectedly. 
 
@@ -223,6 +223,36 @@ toggles.defineDependency('user', {name: 'betty'});
 // throws an error. Dependencies cannot be re-defined.
 toggles.defineDependency('user', {name: 'bob'}); 
 ```
+
+### Keeping track of dependencies
+As your application evolves and feature toggles come and go, you may find 
+your application riddled with `toggles.defineDependency(...)` calls.
+
+To help manage these, you can define a list of **expected dependencies** 
+globally. Doing so will enforce a few things:
+- `FeatureToggles` will throw an exception when created with a feature that 
+requires an unknown dependency,
+- `toggles.defineDependency` will throw an exception when an unexpected 
+dependency is defined.
+
+```js
+FeatureToggles.setExpectedDependencies([
+    'lang', 'domain', 'hobknob', 
+    'user', 'env'
+]);
+
+FeatureToggles.create([{
+    name: 'my-toggle',
+    dependencies: ['user'],
+    test: () => {}
+}]); // throws error
+
+toggles.defineDependency('user', {}); // throws error
+```
+
+This should allow you to keep track of your feature toggle dependencies 
+over time, and allow you to re-assess them each time you add new 
+dependencies.
 
 ## Serialization
 
