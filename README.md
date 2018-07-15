@@ -8,7 +8,7 @@ npm install smart-feature-toggles
 ## Defining toggles
 - A feature toggle may only be `active` or `inactive`.
 - Feature toggles can be scoped (eg. to a http request, or to an application context).
-- A feature toggle _should_ not change value between calls*.
+- A feature toggle _should not_ change value between calls*.
 - A feature toggle cannot be given arguments when being queried. All dependencies and relevant values must be defined before a toggle is queried.
 - A feature toggle can be set up to alert developers when it is becoming old.
 
