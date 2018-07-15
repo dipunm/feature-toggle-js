@@ -1,5 +1,10 @@
 # Smart feature toggles 
 
+## Installation
+```bash
+npm install smart-feature-toggles
+```
+
 ## Defining toggles
 - A feature toggle may only be `active` or `inactive`.
 - Feature toggles can be scoped (eg. to a http request, or to an application context).
@@ -8,11 +13,6 @@
 - A feature toggle can be set up to alert developers when it is becoming old.
 
 *Smart feature toggles will cache the calculated value based on this assumption, but the [auto reset feature](#auto-resets) exists to satisfy more dynamic toggles.
-
-## Installation
-```bash
-npm install smart-feature-toggles
-```
 
 ## Usage
 
