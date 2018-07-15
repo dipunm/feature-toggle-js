@@ -52,7 +52,7 @@ features = [{
 const toggles = FeatureToggles.create(features);
 ```
 
-#### Define any dependencies: (see: [Dependencies](#dependencies))
+#### Define your dependencies: (see: [Dependencies](#dependencies))
 ```js
 const request = {query: {test_mode: true}};
 toggles.defineDependency('request', request);
