@@ -1,6 +1,5 @@
 # Smart feature toggles 
 
-
 ## Defining toggles
 - A feature toggle may only be `active` or `inactive`.
 - Feature toggles can be scoped (eg. to a http request, or to an application context).
@@ -8,55 +7,73 @@
 - A feature toggle cannot be given arguments when being queried. All dependencies and relevant values must be defined before a toggle is queried.
 - A feature toggle can be set up to alert developers when it is becoming old.
 
-*Smart feature toggles will cache the calculated value based on this assumption, but the [reset feature](#resets) exists to satisfy more dynamic toggles.
+*Smart feature toggles will cache the calculated value based on this assumption, but the [auto reset feature](#auto-resets) exists to satisfy more dynamic toggles.
 
 ## Installation
 ```bash
 npm install smart-feature-toggles
 ```
 
-## Basic usage example
+## Usage
+
+#### Require `smart-feature-toggles`:
 ```js
 const FeatureToggles = require('smart-feature-toggles');
-const EventEmitter = require('events');
-const ee = new EventEmitter();
+```
 
+#### Name and configure your features:
+```js
 features = [{
     name: 'my-feature',
-    dependencies: ['request']
-    test: (request) => request.query.test_mode,
-    resetOn: (reset) => ee.on('flush-my-feature', reset),
-    health: () => new Date().getFullYear() > 2018 
-        ? 'my-feature toggle is getting old' 
-        : null
+
+    dependencies: [ 'request' ],
+
+    test: ( request ) => 
+        request.query.test_mode,
+    
+    health: () => {
+        // If the toggle is getting old, return an alert
+        if( new Date().getFullYear() > 2018 ) {
+            return 'my-feature toggle is getting old!'; 
+        }
+    }
 }];
+```
 
-
-const toggles = new FeatureToggles(
-    features, 
-    alertUnhealthyFeature
+#### Set up alert handling: (see: [Housekeeping](#housekeeping))
+```js
+FeatureToggles.onHealthAlert(
+    (name, alert) => console.log(name, alert)
 );
+```
 
+#### Create your toggle client:
+```js
+const toggles = FeatureToggles.create(features);
+```
+
+#### Define any dependencies: (see: [Dependencies](#dependencies))
+```js
 const request = {query: {test_mode: true}};
 toggles.defineDependency('request', request);
-
-console.log(toggles.get('my-feature')) // true
-
-// once evaluated, the toggle will keep it's value
-request.query.test_mode = false;
-console.log(toggles.get('my-feature')) // true
-
-// we can force a reset if necessary
-ee.emit('flush-my-feature');
-console.log(toggles.get('my-feature')) // false
-
-// features with a limited lifespan can be set up
-// to automatically alert you or your team.
-function alertUnhealthyFeature(name, message) {
-    console.log(`unhealthy feature toggle found: 
-        ${name}: ${message}`);
-}
 ```
+
+#### Use your feature toggle:
+```js
+if (toggles.get('my-feature')) { // true
+    ...
+}
+
+// alternative syntax. 
+toggles['my-feature']; // true
+
+// once evaluated, the toggle will
+// always return it's original value
+request.query.test_mode = false;
+toggles.get('my-feature'); // true
+```
+
+#### Toggles _can_ be set up to auto update (see: [Auto Resets](#auto-resets))
 
 # API
 see the [API docs](#api). (coming soon)
@@ -74,7 +91,7 @@ const app = express();
 
 // creating a middleware
 app.use((req, res, next) => {
-    const toggles = new FeatureToggles(features);
+    const toggles = FeatureToggles.create(features);
     toggles.defineDependency('request', req);
 
     // http://expressjs.com/en/4x/api.html#res.locals
@@ -82,6 +99,9 @@ app.use((req, res, next) => {
     next();
 });
 ```
+
+Each new instance of `FeatureToggles` will have a clear cache of toggle values.
+The cache will save the calculated values of each toggle as they are queried for the first time.
 
 ## Housekeeping
 One of the most important features in this library, is the ability to define when your feature toggle will start alerting you to clean up.
@@ -109,6 +129,7 @@ const features = [{
 Health checks are executed every time an instance of `FeatureToggles` is created. If this creates too many alerts to manage, you may add custom throttling in the unhealthyFeature handler.
 
 ```js
+FeatureToggles.onHealthAlert(alertUnhealthyFeature);
 function alertUnhealthyFeature(name, message) {
     const hour = new DateTime().getHours();
     const withinWorkingHours =  hour > 9 && hour < 19;
@@ -122,13 +143,21 @@ function alertUnhealthyFeature(name, message) {
 ## Dependencies
 Dependencies are useful when you want to create various toggles based on various sources of data. They can be anything from a service or function, to a value of any type.
 
+Some examples:
 ```js
-toggles.defineDependency('my-dependency', myDependency);
+toggles.defineDependency('server-name', 'qa-sf1');
+toggles.defineDependency('hobknob', hobkbobClient);
+toggles.defineDependency('getAbVariant', (key) => abService.variant(key));
+toggles.defineDependency('user', res.locals.user);
 ```
 
-Dependencies are only retrieved when required. If you have not set any dependencies, and try to retrieve the value of a toggle with no required dependencies, you will receive the toggle value as expected. This is useful when you have a mix of simple and more complex toggles; you can start using the simpler toggles right away without having to source all the dependencies for your more complex toggles.
+### Not all dependencies need to be defined before toggles are used. 
 
-**Note:** If you attempt to query a toggle before its dependencies have been set, the client _will_ throw an exception. This usually indicates that your application does not have enough data to calculate the toggle's value yet and you should re-order the sequence of actions within your application.
+If you have not set all dependencies and try to retrieve the value of a toggle, you will receive the value as expected as long as you have defined the dependencies for that specific toggle. 
+
+This is useful when you have a mix of simple and more complex toggles. You can start using the simpler toggles before defining the dependencies for your more complex toggles.
+
+**Note:** If you attempt to query a toggle before its dependencies have been set, the client **will** throw an exception. This usually indicates that your application does not have enough data to calculate the toggle's value yet and you should re-order the sequence of actions within your application.
 
 ```js
 const features = [
@@ -142,14 +171,15 @@ const features = [
         test: (s) => s.isActive;
     },
 ];
-const toggles = new FeatureToggles(features);
-console.log(toggles.get('simple')) // true
-console.log(toggles.get('complex')) // throws an error.
+const toggles = FeatureToggles.create(features);
+toggles.get('simple'); // true
+toggles.get('complex'); // throws an error.
 ```
 
-Dependencies may only ever be set once per `FeatureToggles` instance. You can rest assured that your feature toggle will not change it's value unexpectedly. 
+### Dependencies may only ever be set once per `FeatureToggles` instance.
+You can rest assured that your feature toggle will not change it's value unexpectedly. 
 
-**Note:** Attempting to set a dependency a second time will result in an exception being thrown. If you require your toggle to be more dynamic, you should use the [reset feature](#resets).
+**Note:** Attempting to set a dependency a second time will result in an exception being thrown. If you require your toggle to be more dynamic, you may use the [auto reset feature](#auto-resets).
 
 ```js
 // no errors.
@@ -159,10 +189,39 @@ toggles.defineDependency('user', {name: 'betty'});
 toggles.defineDependency('user', {name: 'bob'}); 
 ```
 
-## Resets
-**Disclaimer:** Typically, this feature is **not** recommended if you can scope your `FeatureToggles` instances to shorter lifespans. If the value of a toggle were to change mid-way through an asynchronous operation within your application, the operation may produce unexpected results.
+## Serialization
+
+Applications may require sending toggles over the wire. To enable this, toggles can be serialized to JSON.
+```js
+// evaluates and then serializes all the toggles.
+const serialized1 = toggles.toJSON()
+
+// a whitelist array or function can be provided (see API).
+const serialized2 = toggles.toJSON(['my-feature', 'my-feature2'])
+const serialized3 = toggles.toJSON(name => name.startsWith('my-'));
+```
+
+Serialized toggles are simple hash tables. Keep in mind that accessors may produce different results.
+```js
+toggles['mispelled-toggle']; // throws error
+serialized1['mispelled-toggle']; // undefined
+```
+
+This can be alleviated by using the `fromJSON` method.
+```js
+// if you want strict toggle checks, use the fromJSON method
+const toggles2 = FeatureToggles.fromJSON(serialized1);
+toggles2.get('my-feature') // false
+toggles2['my-feature'] // false
+toggles2['mispelled-toggle'] // throws error
+```
+
+## Auto Resets
+**Disclaimer:** Typically, this feature is **not** recommended if you can scope your `FeatureToggles` instances to shorter lifespans (see: [Scoping](#scoping)). If the value of a toggle were to change mid-way through an asynchronous operation within your application, the operation may produce unexpected results.
 
 Some dependencies may be more dynamic than others; a simple example is the [Hobknob client](https://github.com/opentable/hobknob-client-nodejs/blob/master/src/Client.js).
+
+**Note:** Even with the hobknob client running server-side, typically, you would want to wait until you have finished processing your request before updating the toggle. By scoping the toggles to the request, you can avoid needing to reset.
 
 To keep your application lean and fast, the smart-feature-toggle client uses a synchronous api and the value of each toggle is calculated only once per `FeatureToggles` instance.
 
