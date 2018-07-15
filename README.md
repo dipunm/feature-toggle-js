@@ -221,11 +221,11 @@ toggles2['mispelled-toggle'] // throws error
 
 Some dependencies may be more dynamic than others; a simple example is the [Hobknob client](https://github.com/opentable/hobknob-client-nodejs/blob/master/src/Client.js).
 
-**Note:** Even with the hobknob client running server-side, typically, you would want to wait until you have finished processing your request before updating the toggle. By scoping the toggles to the request, you can avoid needing to reset.
+**Note:** Even with the hobknob client running server-side, typically, you would want to wait until you have finished processing your request before updating the toggle. By scoping the toggles to the request, you can avoid needing to use the auto reset feature.
 
 To keep your application lean and fast, the smart-feature-toggle client uses a synchronous api and the value of each toggle is calculated only once per `FeatureToggles` instance.
 
-If your dependent service may update, we provide a resetOn callback property. This callback will recieve a `reset` method that you may use at any time to force the calculated value to be forgotten so that it may be re-calculated.
+If your dependent service may update, we provide a resetOn callback property. This callback will recieve a `reset` method that you may use at any time to force the calculated value to be forgotten so that it may be re-calculated the next time it is queried.
 
 ```js
 const features = [{
