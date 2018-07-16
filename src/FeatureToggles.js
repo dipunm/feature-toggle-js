@@ -20,7 +20,7 @@ function runHealthCheck(features) {
             const alert = f.health ? f.health() : null;
             return {name, alert};
         })
-        .filter(({alert}) => alert === null)
+        .filter(({alert}) => alert !== null)
         .forEach(({name, alert}) => {
             healthCallback(name, alert);
         });
@@ -38,7 +38,6 @@ function provideResets(features, cache) {
     });
 }
 
-
 class FeatureToggles {
     constructor(features) {
         this.features = features;
@@ -49,7 +48,7 @@ class FeatureToggles {
                     ...(f.dependencies || [])
                 ], []);
             const unexpected = allDependencies.filter(d => 
-                unexpected.indexOf(d) === -1);
+                expectedDependencies.indexOf(d) === -1);
             if (unexpected.length) {
                 throw new Error(ERR_UNEXPECTED_DEPENDENCIES_REQUIRED(unexpected));
             }
@@ -58,11 +57,19 @@ class FeatureToggles {
         this.dependencies = [];
         runHealthCheck(features);
         provideResets(features, this.cache);
+        this.values = new Proxy(
+            {},
+            {
+                get: (target, prop) => {
+                    return this.get(prop);
+                }
+            }
+        );;
     }
 
     defineDependency(dependencyName, dependency) {
         if(dependencyName in this.dependencies) {
-            throw new Error(ERR_DEPENDENCY_ALREADY_DEFINED);
+            throw new Error(ERR_DEPENDENCY_ALREADY_DEFINED(dependencyName));
         }
 
         if (
@@ -78,12 +85,12 @@ class FeatureToggles {
         if(!this.cache[featureName]) {           
             const feature = this.features.find(f => f.name === featureName);
             if (!feature) {
-                throw Error(ERR_TOGGLE_NOT_DEFINED(featureName));
+                throw new Error(ERR_TOGGLE_NOT_DEFINED(featureName));
             }
             const dependencyNames = feature.dependencies || [];
             const dependencies = dependencyNames.map(dependencyName => {
                 if (dependencyName in this.dependencies) {
-                    return this.dependencies[l];
+                    return this.dependencies[dependencyName];
                 }
                 throw new Error(ERR_DEPENDENCY_NOT_DEFINED(featureName, dependencyName));
             });
@@ -94,7 +101,7 @@ class FeatureToggles {
 
     toJSON(whitelist = []) {
         let filter;
-        if(typeof whitelist === 'array') {
+        if(Array.isArray(whitelist)) {
             if (whitelist.length > 0) {
                 filter = (e) => filter.indexOf(e) > -1;
             } else {
@@ -102,40 +109,30 @@ class FeatureToggles {
             }
         } else if (typeof whitelist === 'function') {
             filter = whitelist;
-        } else{
-            throw new Error();
+        } else {
+            throw new Error(`Unsupported whitelist parameter of type ${typeof whitelist}`);
         }
 
-        return this.features
-            .filter(f => whitelist(f.name))
-            .reduce((json, f) => ({
-                ...json, 
-                [f.name]: this.get(f.name)
-            }),{});
+        return {
+            values: this.features
+                .filter(f => filter(f.name))
+                .reduce((json, f) => ({
+                    ...json, 
+                    [f.name]: this.get(f.name)
+                }),{})
+        };
     }
 }
 
-const arrayAccessor = {
-    get: function(target, prop) {
-        if(!target[prop]) {
-            target.get(prop);
-        }
-        return target[prop];
-    }
-}
+module.exports.create = (features) => new FeatureToggles(features);
 
-
-modules.export.create = (...args) => new Proxy(
-    new FeatureToggles(...args),
-    arrayAccessor
-);
-
-modules.export.fromJSON = (json) => {
-    const features = Object.keys(json)
+module.exports.fromJSON = (json) => {
+    const features = Object.keys(json.values)
         .map(name => ({
             name,
             test: () => json[name]
-        }))
+        }));
+    return new FeatureToggles(features);
 }
-modules.export.onHealthAlert = onHealthAlert;
-modules.export.setExpectedDependencies = setExpectedDependencies;
+module.exports.onHealthAlert = onHealthAlert;
+module.exports.setExpectedDependencies = setExpectedDependencies;

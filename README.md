@@ -36,7 +36,7 @@ FeatureToggles.onHealthAlert(
 
 #### Name and configure your features:
 ```js
-features = [{
+const features = [{
     name: 'my-feature',
 
     dependencies: [ 'request' ],
@@ -71,7 +71,7 @@ if (toggles.get('my-feature')) { // true
 }
 
 // alternative syntax. 
-toggles['my-feature']; // true
+toggles.values['my-feature']; // true
 
 // once evaluated, the toggle will
 // always return it's original value
