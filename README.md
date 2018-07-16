@@ -87,15 +87,15 @@ toggles.get('my-feature'); // true
 #### Toggles _can_ be set up to auto update (see: [Auto Resets](#auto-resets))
 
 # Features
-## Scoping
+### Scoping:
 Read about [Scoping](docs/features/SCOPING.md)
-## Housekeeping
+### Housekeeping:
 Read about [Housekeeping](docs/features/HOUSEKEEPING.md)
-## Dependencies
+### Dependencies:
 Read about [Dependencies](docs/features/DEPENDENCIES.md)
-## Serialization
+### Serialization:
 Read about [Serialization](docs/features/SERIALIZATION.md)
-## Auto Resets
+### Auto Resets:
 Read about [Auto Resets](docs/features/AUTO_RESETS.md)
 
 # API
