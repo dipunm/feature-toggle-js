@@ -1,4 +1,9 @@
 # Smart feature toggles 
+## Contents
+* [Installation](#installation)
+* [Defining toggles](#defining-toggles)
+* [Usage](#usage)
+* [Features](#features)
 
 ## Installation
 ```bash
@@ -11,13 +16,13 @@ npm install smart-feature-toggles
 application context).
 - A feature toggle _should not_ change value between calls*.
 - A feature toggle cannot be given arguments when being queried. All 
-[dependencies](docs/features/DEPENDENCIES.md) should be defined and ready before a toggle 
+[dependencies](#dependencies) should be defined and ready before a toggle 
 is queried.
 - A feature toggle can be set up to alert developers when it is becoming 
 old.
 
 *Smart feature toggles will cache the calculated value based on this 
-assumption, but the [auto reset feature](docs/features/AUTO_RESETS.md) exists to satisfy 
+assumption, but the [auto reset feature](#auto-resets) exists to satisfy 
 more dynamic toggles.
 
 ## Usage
@@ -27,7 +32,7 @@ more dynamic toggles.
 const FeatureToggles = require('smart-feature-toggles');
 ```
 
-#### Set up alert handling: (see: [Housekeeping](docs/features/HOUSEKEEPING.md))
+#### Set up alert handling: (see: [Housekeeping](#housekeeping))
 ```js
 FeatureToggles.onHealthAlert(
     (name, alert) => console.log(name, alert)
@@ -58,7 +63,7 @@ const features = [{
 const toggles = FeatureToggles.create(features);
 ```
 
-#### Define your dependencies: (see: [Dependencies](docs/features/DEPENDENCIES.md))
+#### Define your dependencies: (see: [Dependencies](#dependencies))
 ```js
 const request = {query: {test_mode: true}};
 toggles.defineDependency('request', request);
@@ -79,14 +84,19 @@ request.query.test_mode = false;
 toggles.get('my-feature'); // true
 ```
 
-#### Toggles _can_ be set up to auto update (see: [Auto Resets](docs/features/AUTO_RESETS.md))
+#### Toggles _can_ be set up to auto update (see: [Auto Resets](#auto-resets))
+
+# Features
+## Scoping
+Read about [Scoping](docs/features/SCOPING.md)
+## Housekeeping
+Read about [Housekeeping](docs/features/HOUSEKEEPING.md)
+## Dependencies
+Read about [Dependencies](docs/features/DEPENDENCIES.md)
+## Serialization
+Read about [Serialization](docs/features/SERIALIZATION.md)
+## Auto Resets
+Read about [Auto Resets](docs/features/AUTO_RESETS.md)
 
 # API
 see the [API docs](#api). (coming soon)
-
-# Features
-## [Scoping](docs/features/SCOPING.md)
-## [Housekeeping](docs/features/HOUSEKEEPING.md)
-## [Dependencies](docs/features/DEPENDENCIES.md)
-## [Serialization](docs/features/SERIALIZATION.md)
-## [Auto Resets](docs/features/AUTO_RESETS.md)
