@@ -87,11 +87,11 @@ FeatureToggles.setExpectedDependencies([
 
 FeatureToggles.create([{
     name: 'my-toggle',
-    dependencies: ['user'],
+    dependencies: ['myService'],
     test: () => {}
 }]); // throws error
 
-toggles.defineDependency('user', {}); // throws error
+toggles.defineDependency('myObject', {}); // throws error
 ```
 
 This should allow you to keep track of your feature toggle dependencies 
