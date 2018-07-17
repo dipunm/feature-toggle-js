@@ -1,9 +1,9 @@
 # Auto Resets
-**Disclaimer:** Typically, this feature is **not** recommended if you can 
+**Disclaimer:** _Typically, this feature is **not** recommended if you can 
 scope your `FeatureToggles` instances to shorter lifespans 
 (see: [Scoping](SCOPING.md)). If the value of a toggle were to change mid-way 
 through an asynchronous operation within your application, the operation 
-may produce unexpected results.
+may produce unexpected results._ **Use with care.**
 
 Some dependencies may be more dynamic than others; a simple example is the 
 [Hobknob client](https://github.com/opentable/hobknob-client-nodejs/blob/master/src/Client.js).
