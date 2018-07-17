@@ -1,6 +1,6 @@
 # Scoping
-Each new instance of `FeatureToggles` may have slightly different 
-dependencies, and there is no limit to how many instances you can create.
+Each new instance of `FeatureToggles` may be given different values for their 
+[dependencies](DEPENDENCIES.md), and there is no limit to how many instances you can create.
 
 A typical scenario, is to scope the feature toggles to user requests in an 
 [express](https://expressjs.com/) application.
