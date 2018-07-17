@@ -29,13 +29,25 @@ created. If this creates too many alerts to manage, you may add custom
 throttling in the unhealthyFeature handler.
 
 ```js
+const { throttle } = require('lodash')
 FeatureToggles.onHealthAlert(alertUnhealthyFeature);
+
+// This ensures that you will see one of each alert at most once per 3 hours
+const throttles = {};
+const THREE_HOURS = 10800000;
+function alertThrottled(key) {
+    throttles[key] = throttles[key] || throttle(() => 
+        slack.sendWarning(
+            `unhealthy feature toggle found: ${key.name}: ${key.message}`),
+            THREE_HOURS);
+    
+    throttles[key]();
+}
 function alertUnhealthyFeature(name, message) {
     const hour = new DateTime().getHours();
     const withinWorkingHours =  hour > 9 && hour < 19;
     if(withinWorkingHours) {
-        slack.sendWarning(`unhealthy feature toggle found: 
-        ${name}: ${message}`);
+        alertThrottled({name, message});
     }
 }
 ```
