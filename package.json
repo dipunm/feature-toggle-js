@@ -4,7 +4,8 @@
   "description": "A flexible feature flag library for js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "speak": "echo 'heyo'"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,31 @@
   "bugs": {
     "url": "https://github.com/dipunm/feature-toggle-js/issues"
   },
-  "homepage": "https://github.com/dipunm/feature-toggle-js#readme"
+  "homepage": "https://github.com/dipunm/feature-toggle-js#readme",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "husky": "^1.0.0-rc.13",
+    "jest": "^23.4.1",
+    "lint-staged": "^7.2.0",
+    "prettier-eslint-cli": "^4.7.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && jest"
+    }
+  },
+  "lint-staged": {
+    "*.{json,css,md}": [
+      "prettier-eslint --write",
+      "git add"
+    ],
+    "*.js": [
+      "prettier-eslint --write",
+      "eslint",
+      "git add"
+    ]
+  }
 }
