@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`param validation when calling FeatureToggles.create() || given a toggle object with a duplicate name || should throw with a meaningful message 1`] = `"Argument exception: \\"features\\" position 1 contains a duplicate value"`;
+
+exports[`param validation when calling FeatureToggles.create() || given a toggle object with a non array dependencies || should throw with a meaningful message 1`] = `"Argument exception: \\"features\\" at position 1 fails because [child \\"dependencies\\" fails because [\\"dependencies\\" must be an array]]"`;
+
+exports[`param validation when calling FeatureToggles.create() || given a toggle object with a non function health || should throw with a meaningful message 1`] = `"Argument exception: \\"features\\" at position 1 fails because [child \\"health\\" fails because [\\"health\\" must be a Function]]"`;
+
+exports[`param validation when calling FeatureToggles.create() || given a toggle object with a non function resetOn || should throw with a meaningful message 1`] = `"Argument exception: \\"features\\" at position 1 fails because [child \\"resetOn\\" fails because [\\"resetOn\\" must be a Function]]"`;
+
+exports[`param validation when calling FeatureToggles.create() || given a toggle object with a non function test || should throw with a meaningful message 1`] = `"Argument exception: \\"features\\" at position 1 fails because [child \\"test\\" fails because [\\"test\\" must be a Function]]"`;
+
+exports[`param validation when calling FeatureToggles.create() || given a toggle object with a non function test || should throw with a meaningful message 2`] = `"Argument exception: \\"features\\" at position 1 fails because [child \\"test\\" fails because [\\"test\\" must be a Function]]"`;
+
+exports[`param validation when calling FeatureToggles.create() || given a toggle object with a non-string name || should throw with a meaningful message 1`] = `"Argument exception: \\"features\\" at position 1 fails because [child \\"name\\" fails because [\\"name\\" must be a string]]"`;
+
+exports[`param validation when calling FeatureToggles.create() || given a toggle object with an empty name || should throw with a meaningful message 1`] = `"Argument exception: \\"features\\" at position 1 fails because [child \\"name\\" fails because [\\"name\\" is not allowed to be empty]]"`;
+
+exports[`param validation when calling FeatureToggles.create() || given a toggle object with no name || should throw with a meaningful message 1`] = `"Argument exception: \\"features\\" at position 1 fails because [child \\"name\\" fails because [\\"name\\" is required]]"`;
+
+exports[`param validation when calling FeatureToggles.create() || given a toggle object with no test || should throw with a meaningful message 1`] = `"Argument exception: \\"features\\" at position 1 fails because [child \\"test\\" fails because [\\"test\\" is required]]"`;
+
+exports[`param validation when calling FeatureToggles.create() || given an empty array || should throw with a meaningful message 1`] = `"Argument exception: \\"features\\" must contain at least 1 items"`;
+
+exports[`param validation when calling FeatureToggles.create() || given no parameters || should throw with a meaningful message 1`] = `"Argument exception: \\"features\\" is required"`;

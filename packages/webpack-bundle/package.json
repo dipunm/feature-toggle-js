@@ -1,0 +1,21 @@
+{
+  "name": "webpack-bundle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-serve"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "smart-feature-toggles": "^1.0.0"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.16.1",
+    "webpack-cli": "^3.0.8",
+    "webpack-serve": "^2.0.2"
+  }
+}

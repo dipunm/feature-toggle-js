@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`creating feature toggles after declaring the expected dependencies given unexpected dependencies, should throw an error 1`] = `"Unexpected dependencies found in toggles: 'blah'"`;
+
+exports[`creating feature toggles after declaring the expected dependencies to an empty array any feature with dependencies should throw an error 1`] = `"Unexpected dependencies found in toggles: 'lang'"`;
