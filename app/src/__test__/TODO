@@ -1,0 +1,5 @@
+test defineDependency()
+toJSON
+fromJSON
+Re-evaluate bundling and bundle testing
+eslint accessor properties

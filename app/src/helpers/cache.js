@@ -8,3 +8,10 @@ module.exports.provideResets = (features, cache) => {
     }
   });
 };
+
+module.exports.withCache = valueCache => fn => (featureName) => {
+  if (!Object.prototype.hasOwnProperty.call(valueCache, featureName)) {
+    valueCache[featureName] = fn(featureName);
+  }
+  return valueCache[featureName];
+};

@@ -28,9 +28,14 @@ module.exports.createSimpleToggles = features => module.exports.createtoggles(fe
 
 module.exports.createToggles = (
   features,
-  { getDependencies, defineDependency, createToJSON },
+  {
+    withCache, getDependencies, defineDependency, createToJSON,
+  },
 ) => {
-  const get = getFeatureValue(features, getDependencies);
+  const get = withCache
+    ? withCache(getFeatureValue(features, getDependencies))
+    : getFeatureValue(features, getDependencies);
+
   const toggles = {
     get,
     values: proxy(get),

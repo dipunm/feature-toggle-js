@@ -1,6 +1,6 @@
 const { createToggles } = require('./helpers/core');
 const { runHealthCheck, onHealthAlert } = require('./helpers/health');
-const { provideResets } = require('./helpers/cache');
+const { provideResets, withCache } = require('./helpers/cache');
 const {
   setExpectedDependencies,
   dependencyGetter,
@@ -20,6 +20,7 @@ module.exports.create = (features) => {
 
   const dependencies = {};
   const toggles = createToggles(features, {
+    withCache: withCache(cache),
     getDependencies: dependencyGetter(dependencies),
     defineDependency: dependencySetter(dependencies),
     createToJSON,

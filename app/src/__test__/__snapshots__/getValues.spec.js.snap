@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`evaluating a toggle that was mispelled should throw with a meaningful message 1`] = `"Unable to find feature toggle 'misspelling'. Please ensure that the feature name is spelled correctly."`;
+
+exports[`evaluating a toggle with dependencies without defining the dependency should throw with a meaningful message 1`] = `"Unable to get feature toggle toggle1: dependency not defined: 'lang'"`;
