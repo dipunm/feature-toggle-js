@@ -18,7 +18,6 @@ describe('evaluating a toggle', () => {
 
   describe('via the get method', () => {
     beforeEach(() => {
-      features[0].test.returns(undefined);
       toggles = FeatureToggles.create(features);
       sinon.spy(toggles, 'get');
       toggles.get('toggle1');
@@ -38,7 +37,7 @@ describe('evaluating a toggle', () => {
     beforeEach(() => {
       features[0].test.returns(undefined);
       toggles = FeatureToggles.create(features);
-      toggles.values.toggle1; // eslint-disable-line no-unused-expressions
+      toggles.values['toggle1']; // eslint-disable-line no-unused-expressions
     });
 
     test('should call the test method', () => {
