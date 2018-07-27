@@ -3,7 +3,7 @@ const fs = require('fs');
 const cmd = require('node-cmd');
 const rmrf = require('rimraf');
 
-const PATH_PACKAGES = path.join(__dirname, '../../../packages/');
+const PATH_PACKAGES = path.join(__dirname, '../../../__packages__/');
 const uniqueTextFromValidationLibrary = 'Must be invoked on a Joi instance';
 
 describe('webpack bundling', () => {
