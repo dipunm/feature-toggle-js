@@ -3,14 +3,10 @@ const { createSimpleToggles } = require('./helpers/core');
 // and managed server side, but we want to continue using
 // them on the client side.
 
-// fromJSON
-// get
-// values
-
 module.exports.fromJSON = (json) => {
   const features = Object.keys(json.values).map(name => ({
     name,
-    test: () => json[name],
+    test: () => json.values[name],
   }));
   return createSimpleToggles(features);
 };

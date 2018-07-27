@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build-browser": "webpack --config webpack.config.browser.js",
+    "build-node": "webpack --config webpack.config.node.js",
     "start": "webpack-serve"
   },
   "author": "",

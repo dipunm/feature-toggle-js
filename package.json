@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "test": "lerna run test",
+    "watch": "(cd app && npm run test -- --watch)"
+  },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",
