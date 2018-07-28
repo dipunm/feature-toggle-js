@@ -1,7 +1,8 @@
 {
   "scripts": {
     "test": "lerna run test",
-    "watch": "(cd app && npm run test -- --watch)"
+    "watch": "(cd app && npm run test -- --watch)",
+    "postinstall": "lerna bootstrap"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
