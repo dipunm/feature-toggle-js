@@ -1,28 +1,7 @@
 {
-  "name": "smart-feature-toggles",
-  "version": "1.0.0",
-  "description": "A flexible feature flag library for js",
-  "main": "index.js",
   "scripts": {
     "test": "jest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dipunm/feature-toggle-js.git"
-  },
-  "keywords": [
-    "feature",
-    "toggles",
-    "flag",
-    "feature",
-    "toggle"
-  ],
-  "author": "Dipun Mistry <dipunm@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/dipunm/feature-toggle-js/issues"
-  },
-  "homepage": "https://github.com/dipunm/feature-toggle-js#readme",
   "devDependencies": {
     "jest": "^23.4.1",
     "node-cmd": "^3.0.0",

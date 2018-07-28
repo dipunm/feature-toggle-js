@@ -9,7 +9,7 @@ const uniqueTextFromValidationLibrary = 'Must be invoked on a Joi instance';
 describe('webpack bundling', () => {
   const workingDir = path.join(PATH_PACKAGES, 'webpack-bundle');
 
-  beforeEach((done) => {
+  beforeAll((done) => {
     rmrf(path.join(workingDir, 'dist'), (rmrfErr) => {
       if (rmrfErr) {
         done(rmrfErr);
@@ -29,7 +29,7 @@ describe('webpack bundling', () => {
             done({ data, buildErr });
           }
           output = fs.readFileSync(
-            path.join(workingDir, 'dist', 'bundle.js'),
+            path.join(workingDir, 'dist', 'bundle-web.js'),
             'utf8',
           );
           done();
@@ -52,7 +52,7 @@ describe('webpack bundling', () => {
             done({ data, buildErr });
           }
           output = fs.readFileSync(
-            path.join(workingDir, 'dist', 'bundle.js'),
+            path.join(workingDir, 'dist', 'bundle-node.js'),
             'utf8',
           );
           done();

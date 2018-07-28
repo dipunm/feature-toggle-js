@@ -7,7 +7,7 @@ module.exports = {
   target,
   entry: './index.js',
   output: {
-    filename: 'bundle.js',
+    filename: 'bundle-web.js',
     path: path.resolve(__dirname, 'dist'),
   },
   mode: 'production',
