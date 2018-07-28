@@ -1,25 +1,4 @@
 {
-  "name": "smart-feature-toggles",
-  "version": "1.0.0",
-  "description": "A flexible feature flag library for js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dipunm/smart-feature-toggles.git"
-  },
-  "keywords": [
-    "feature",
-    "toggles",
-    "flag",
-    "feature",
-    "toggle"
-  ],
-  "author": "Dipun Mistry <dipunm@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/dipunm/smart-feature-toggles/issues"
-  },
-  "homepage": "https://github.com/dipunm/smart-feature-toggles#readme",
-  "main": "index.js",
   "scripts": {
     "test": "lerna run test",
     "watch": "(cd app && npm run test -- --watch)",
