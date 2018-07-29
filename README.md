@@ -123,7 +123,7 @@ Read about [Auto Resets](docs/features/AUTO_RESETS.md)
 
 ### Lite Client:
 
-By default, webpack bundles for the web will include a light version of this library that exposes only the `fromJSON` factory method. Most applications configure and initialise their toggles on the server side and only need basic functionality on the client side. If you require the full library on the client-side, you can read about [Webpack Bundling](docs/features/WEBPACK_BUNDLING.md)
+By default, webpack bundles for the web that import smart-feature-toggles will import the lite version of this library automatically. The lite version excludes most features and serves mainly to enable interacting with serialized toggles using the same syntax as used on the server-side. Read about [Webpack Bundling](docs/features/WEBPACK_BUNDLING.md)
 
 # API
 
