@@ -24,14 +24,12 @@ function proxy(getVal) {
   );
 }
 
-module.exports.createSimpleToggles = features => module.exports.createtoggles(features, {});
-
-module.exports.createToggles = (
+function createToggles(
   features,
   {
     withCache, getDependencies, defineDependency, createToJSON,
   },
-) => {
+) {
   const get = withCache
     ? withCache(getFeatureValue(features, getDependencies))
     : getFeatureValue(features, getDependencies);
@@ -50,4 +48,7 @@ module.exports.createToggles = (
   }
 
   return toggles;
-};
+}
+
+module.exports.createToggles = createToggles;
+module.exports.createSimpleToggles = features => createToggles(features, {});

@@ -40,6 +40,16 @@ describe('webpack bundling', () => {
     test('should not include the joi validation library', () => {
       expect(output).not.toContain(uniqueTextFromValidationLibrary);
     });
+
+    test('should execute with the expected output', (done) => {
+      cmd.get(
+        `node ${path.join(workingDir, 'dist', 'bundle-web.js')}`,
+        (err, out) => {
+          expect(out).toMatchSnapshot();
+          done(err);
+        },
+      );
+    });
   });
 
   describe('for node', () => {

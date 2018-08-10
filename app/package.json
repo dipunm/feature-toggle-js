@@ -33,5 +33,5 @@
     "joi": "^13.4.0"
   },
   "sideEffects": false,
-  "browser": "src/client.js"
+  "browser": "src/lite.js"
 }
