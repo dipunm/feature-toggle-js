@@ -5,3 +5,9 @@ exports[`webpack bundling for the browser should execute with the expected outpu
 toggle2:  false
 "
 `;
+
+exports[`webpack bundling for the browser with the lite client should execute with the expected output 1`] = `
+"toggle1:  true
+toggle2:  false
+"
+`;

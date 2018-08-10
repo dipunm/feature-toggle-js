@@ -1,6 +1,8 @@
 const joi = require('joi');
 
 module.exports = function assertArgs(features) {
+  if (!joi) return;
+
   const result = joi.validate(
     features,
     joi

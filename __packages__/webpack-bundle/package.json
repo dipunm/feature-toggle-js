@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build-browser": "webpack --config webpack.config.browser.js",
+    "build-browser-lite": "webpack --config webpack.config.browser.lite.js",
     "build-node": "webpack --config webpack.config.node.js",
     "start": "webpack-serve"
   },

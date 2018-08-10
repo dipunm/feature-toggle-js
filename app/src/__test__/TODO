@@ -2,5 +2,5 @@ test defineDependency()
 toJSON
 fromJSON
 
-Decide what to do with lite client.
+search for TODO in code and fix everything.
 publish package v1.0.0!!

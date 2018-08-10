@@ -7,6 +7,7 @@ const {
   dependencySetter,
   assertDependencies,
 } = require('./helpers/dependencies');
+const { fromJSON } = require('./lite');
 const { createToJSON } = require('./helpers/json');
 const assertArgs = require('./helpers/fail-fast');
 
@@ -30,3 +31,4 @@ module.exports.create = (features) => {
 
 module.exports.onHealthAlert = onHealthAlert;
 module.exports.setExpectedDependencies = setExpectedDependencies;
+module.exports.fromJSON = fromJSON;

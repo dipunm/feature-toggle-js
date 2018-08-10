@@ -33,5 +33,7 @@
     "joi": "^13.4.0"
   },
   "sideEffects": false,
-  "browser": "src/lite.js"
+  "browser": {
+    "joi": "./src/helpers/joi-empty"
+  }
 }
