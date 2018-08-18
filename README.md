@@ -1,6 +1,6 @@
 # Smart feature toggles
 
-[![Build Status](https://travis-ci.com/dipunm/smart-feature-toggles.svg?branch=master)](https://travis-ci.com/dipunm/smart-feature-toggles) ![Normal bundle size](http://img.badgesize.io/https://s3.eu-west-2.amazonaws.com/smart-feature-toggles/bundle-web-lite.js?label=client%20size) ![Normal bundle size](http://img.badgesize.io/https://s3.eu-west-2.amazonaws.com/smart-feature-toggles/bundle-web-lite.js?label=client%20size%20gzipped&compression=gzip)
+[![Build Status](https://travis-ci.com/dipunm/smart-feature-toggles.svg?branch=master)](https://travis-ci.com/dipunm/smart-feature-toggles) ![Client bundle size](https://img.badgesize.io/https://s3.eu-west-2.amazonaws.com/smart-feature-toggles/bundle-web-lite.js?label=client%20size) ![Client bundle size](https://img.badgesize.io/https://s3.eu-west-2.amazonaws.com/smart-feature-toggles/bundle-web-lite.js?label=client%20size%20gzipped&compression=gzip)
 
 _Client sizes are based on a webpack bundle using the lite version of the library. (See [Lite Client](#lite-client))_
 
