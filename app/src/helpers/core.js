@@ -1,4 +1,4 @@
-const { ERR_TOGGLE_NOT_DEFINED } = require('./error-msgs');
+const ERR_TOGGLE_NOT_DEFINED = require('./error-msgs/ERR_TOGGLE_NOT_DEFINED');
 
 function getFeatureValue(features, dependencyGetter) {
   return (featureName) => {
