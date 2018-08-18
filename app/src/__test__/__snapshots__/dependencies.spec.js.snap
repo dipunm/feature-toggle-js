@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`defining a dependency on a new toggles instance a second time should throw explaining that it was already defined 1`] = `"Cannot define dependency 'dependency1': dependency has already been defined."`;
+
+exports[`defining a dependency on a new toggles instance after setting the expected dependencies to an empty array should throw explaining that it is an unexpected dependency 1`] = `"An unexpected dependency was defined: 'dependency1'"`;
+
+exports[`defining a dependency on a new toggles instance that was unexpected after setting the expected dependencies should throw explaining that it is an unexpected dependency 1`] = `"An unexpected dependency was defined: 'dependency1'"`;
