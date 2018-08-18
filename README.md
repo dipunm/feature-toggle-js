@@ -34,7 +34,7 @@ assumption, but the [auto reset feature](#auto-resets) exists to satisfy
 more dynamic toggles.
 
 ## Usage
-
+ 
 #### Require `smart-feature-toggles`:
 
 ```js
