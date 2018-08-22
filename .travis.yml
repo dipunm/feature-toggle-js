@@ -1,12 +1,19 @@
 language: node_js
 node_js:
   - "lts/*"
+before_deploy: "cd app"
 deploy:
-  provider: s3
-  access_key_id: "AKIAIIFFRH7YOQ7DTQWQ"
-  secret_access_key:
-    secure: "nd9qUIg1MArY0swOcUgEnJFGLB4CFJ9cnNGqJbeckOZKgYIfseMjL9R5gH44fTb5m5ul6tkw8841lyTkSnI9ARjsZHE/Jc/IAltEhpiqkAdTi5C/d0iAC/GJKtwvqBAIA4/EJZ1uVQ7DwzQH0wQgvEIqLU8EiRoE8nEpW4ci2OezQZe3vC/xLND/Ti4TYxsqKqVbq2BpvbMXX/wPxy5uU56dDAvOj62VkJAjjjBAg7tbqoWcQM4fZSi50Sq6VWuGEqZQdR9KslrXaYBWUF6on39XtmS++7C8S1IgP8DqIvZ9pTfYmi2+NymIdpckeJBnc9KlQlh+BYiVvxuOuRkUOYe8XzICCiGvfYd4iuiiVCcO7fIfnWSqCvtN4aScJfdUwSEKMNXHdyarDVkceZ5I+hIc8dhyB7yMN/zEW6FfeNsBkXlMmd7K92YCj7uEONM4LLXqodOHkiUILtOKAXZJKiRd51t/cdFPNSb/yVTBmtI76xHILCjl+ssglnJ1HhrObkyiJjYLO7sFljijN4nip0lycrhSTUGj5t5C0ZlJoM20Lg/GeZiFH3gDvTE790OFxqSCb/scrneDWLm8dl4A+NOgnn5FUhdYY0U0Td+ioTGI5N5iWFgzBfCuBCl1ZHoLHtyMFdfjdoYWTfHNlEBDR9Q3COA2ZmCLAEaAk3dB/b4="
-  bucket: "smart-feature-toggles"
-  skip_cleanup: true
-  acl: public_read
-  local_dir: __packages__/webpack-bundle/dist
+  - provider: s3
+    access_key_id: "AKIAIIFFRH7YOQ7DTQWQ"
+    secret_access_key:
+      secure: "nd9qUIg1MArY0swOcUgEnJFGLB4CFJ9cnNGqJbeckOZKgYIfseMjL9R5gH44fTb5m5ul6tkw8841lyTkSnI9ARjsZHE/Jc/IAltEhpiqkAdTi5C/d0iAC/GJKtwvqBAIA4/EJZ1uVQ7DwzQH0wQgvEIqLU8EiRoE8nEpW4ci2OezQZe3vC/xLND/Ti4TYxsqKqVbq2BpvbMXX/wPxy5uU56dDAvOj62VkJAjjjBAg7tbqoWcQM4fZSi50Sq6VWuGEqZQdR9KslrXaYBWUF6on39XtmS++7C8S1IgP8DqIvZ9pTfYmi2+NymIdpckeJBnc9KlQlh+BYiVvxuOuRkUOYe8XzICCiGvfYd4iuiiVCcO7fIfnWSqCvtN4aScJfdUwSEKMNXHdyarDVkceZ5I+hIc8dhyB7yMN/zEW6FfeNsBkXlMmd7K92YCj7uEONM4LLXqodOHkiUILtOKAXZJKiRd51t/cdFPNSb/yVTBmtI76xHILCjl+ssglnJ1HhrObkyiJjYLO7sFljijN4nip0lycrhSTUGj5t5C0ZlJoM20Lg/GeZiFH3gDvTE790OFxqSCb/scrneDWLm8dl4A+NOgnn5FUhdYY0U0Td+ioTGI5N5iWFgzBfCuBCl1ZHoLHtyMFdfjdoYWTfHNlEBDR9Q3COA2ZmCLAEaAk3dB/b4="
+    bucket: "smart-feature-toggles"
+    skip_cleanup: true
+    acl: public_read
+    local_dir: ../__packages__/webpack-bundle/dist
+  - provider: npm
+    email: 'dipunm@gmail.com'
+    api_key:
+      secure: "taUo4shIydS0ErHHJ2y92YVtKIlX81vQrfW8UjxiFt+84Erf0Q7e+m9fMDAoK9Uv9cGdP/e+kI9/LZV/TiW7FV3qDYeQ/tYSJJFxwnd+5qdC7ri4hbIvwS7TFxMqh56yEFlUfrKJFztl5dOfoF200VPfyVWcu3PVlIkccPpUSxlt6zAHhIqATV2/2+87y6COxxUqMHdOnE5Lv19KvW+osb0P1Smop5qVZGbSMvXr/p9VZ+sf4NYRJLVAb/S4y2i20Lrq01e1ezjg6MQroC2z1WnSZNFOIVwiu24t7Tg3hGH3Cpqqba6d+EkqS7P80sTYsEtNTfc7neSPw8bCZyopRv8HV26aC8LLWJC21WAF02c20/FP9AsIshBrBOep781ADhLvCD00hG+tvVzbWAA79uE1hL9TEx2IMW1c6qWwpRIRaXn0aMuKEsLWp27LC7q3tmlNHxx9pp2pt7k96uocVLeFSu+SLuOmkvRI9QmHEgLya6ugoUPCSyKDjU9BndbvChlq4Rx1XlL6q0OPNhYc/d53sFD7uVwKmUhXeVgbcFIml6X3LqzjmTGkkaFrXFEsEjY0gtTx/8z0m2LACGcZQu1VdFqdnqqKaB7PbOexi9XrLh7DNkQcMI3MkUOnwadUVBDPymMe5ZSuvopjtUlWNFKyXx2RxoDvgE5m1o+w1vA="
+    on:
+      repo: "dipunm/smart-feature-toggles"
