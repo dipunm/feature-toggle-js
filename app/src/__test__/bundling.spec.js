@@ -35,7 +35,7 @@ describe('webpack bundling', () => {
           done();
         },
       );
-    }, 20000);
+    }, 30000);
 
     test('should not include the joi validation library', () => {
       expect(output).not.toContain(uniqueTextFromValidationLibrary);

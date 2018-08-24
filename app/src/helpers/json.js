@@ -27,13 +27,10 @@ module.exports.createToJSON = (get, features) => {
     }
 
     return {
-      values: featureNames.filter(name => filter(name)).reduce(
-        (json, name) => ({
-          ...json,
-          [name]: get(name),
-        }),
-        {},
-      ),
+      values: featureNames.filter(name => filter(name)).reduce((json, name) => {
+        json[name] = get(name);
+        return json;
+      }, {}),
     };
   };
 };
